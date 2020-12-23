@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import chat from "./chat";
+import "./room.css";
 
 function Room() {
 
@@ -7,16 +8,25 @@ function Room() {
     const [text, setText] = React.useState('');
     const { messages, sendMessage } = chat(roomId);
 
-    const clickHandler = () => {
-        console.log(text)
-        sendMessage('hello there')
+    const sendMessageHandler = () => {
+        sendMessage(text);
+        setText('')
+    }
+
+    const handleMessageChange = (event) => {
+        setText(event.target.value);
+        console.log('----------------------------');
     }
 
     return (
-        <div>
-            <h1>{text}</h1>
-            <h2>Hello there</h2>
-            <button onClick={clickHandler}>Click Me!</button>
+        <div className='messaging-div'>
+            <div id='message-display-area'>
+                {messages.map((message) => {
+                    console.log(message.body)
+                })}
+            </div>
+            <textarea value={text} id="text-input-area" onChange={handleMessageChange} placeholder='Enter Message Here...'/>
+            <button onClick={sendMessageHandler}>Send Message</button>
         </div>
     )
 }
