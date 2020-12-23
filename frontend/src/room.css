@@ -25,6 +25,11 @@
   resize: none;
 }
 
+.message {
+    background-color: aqua;
+    color: black;
+}
+
 button {
   background-color: rgb(52, 221, 74);
   width: 100%;

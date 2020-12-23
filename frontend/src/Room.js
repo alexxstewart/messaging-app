@@ -13,6 +13,14 @@ function Room() {
         setText('')
     }
 
+    const checkEnterKeySubmit = (event) => {
+        if (event.which === 13){
+            // enter key was pressed
+            sendMessage(text)
+            setText('')
+        }
+    }
+
     const handleMessageChange = (event) => {
         setText(event.target.value);
         console.log('----------------------------');
@@ -22,10 +30,10 @@ function Room() {
         <div className='messaging-div'>
             <div id='message-display-area'>
                 {messages.map((message) => {
-                    console.log(message.body)
+                    return <p className='message'>{message.body}</p>
                 })}
             </div>
-            <textarea value={text} id="text-input-area" onChange={handleMessageChange} placeholder='Enter Message Here...'/>
+            <textarea value={text} id="text-input-area" onChange={handleMessageChange} onKeyDown={checkEnterKeySubmit} placeholder='Enter Message Here...'/>
             <button onClick={sendMessageHandler}>Send Message</button>
         </div>
     )
