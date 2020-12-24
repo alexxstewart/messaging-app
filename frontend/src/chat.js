@@ -26,12 +26,13 @@ const useChat = (roomId) => {
     };
   }, [roomId]);
 
-  const sendMessage = (messageBody, messageID) => {
+  const sendMessage = (messageBody, messageID, userName) => {
     console.log(messageBody, messageID);
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: socketRef.current.id,
-      messageID: messageID
+      messageID: messageID,
+      userName: userName
     });
   };
 

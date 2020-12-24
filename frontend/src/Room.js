@@ -6,19 +6,21 @@ import { v4 as uuidv4 } from 'uuid';
 function Room() {
     const roomId = '123';
     const [text, setText] = React.useState('');
+    const [userName, setUserName] = React.useState('');
     const { messages, sendMessage } = chat(roomId);
 
     const sendMessageHandler = () => {
         // generate a random id for the text message and send the message
-        sendMessage(text, uuidv4());
-        setText('')
+        console.log(userName);
+        sendMessage(text, uuidv4(), userName);
+        setText('');
     }
 
     const checkEnterKeySubmit = (event) => {
         if (event.which === 13){
             // enter key was pressed
-            sendMessage(text, uuidv4())
-            setText('')
+            sendMessage(text, uuidv4());
+            setText('');
         }
     }
 
@@ -26,21 +28,32 @@ function Room() {
         setText(event.target.value);
     }
 
+    const handleUserNameChange = (event) => {
+        setUserName(event.target.value);
+    }
     return (
         <div className='messaging-div'>
             <div id='message-display-area'>
                 {messages.map((message) => {
-                    if (message.ownedByCurrentUser){
-                        return <p key={message.messageID} className='message'>{message.body}</p>
-                    }else{
-                        return <p key={message.messageID} className='message' style={{backgroundColor: 'red'}}>{message.body}</p>
-                    }
+                    return <Message message={message}/>
                 })}
             </div>
-            <textarea value={text} id="text-input-area" onChange={handleMessageChange} onKeyDown={checkEnterKeySubmit} placeholder='Enter Message Here...'/>
+            <input id='userNameInput' type='text' value={userName} onChange={handleUserNameChange} placeholder='Handle/UserName'/>
+            <textarea value={text} id='text-input-area' onChange={handleMessageChange} onKeyDown={checkEnterKeySubmit} placeholder='Enter Message Here...'/>
             <button onClick={sendMessageHandler}>Send Message</button>
         </div>
     )
+}
+
+function Message(props) {
+    console.log(props.message);
+
+    return (
+        <div>
+            <p className='message'></p>
+            <p id='nameTag'></p>
+        </div>
+    );
 }
 
 export default Room
