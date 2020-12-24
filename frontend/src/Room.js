@@ -19,7 +19,7 @@ function Room() {
     const checkEnterKeySubmit = (event) => {
         if (event.which === 13){
             // enter key was pressed
-            sendMessage(text, uuidv4());
+            sendMessage(text, uuidv4(), userName);
             setText('');
         }
     }
@@ -46,14 +46,23 @@ function Room() {
 }
 
 function Message(props) {
-    console.log(props.message);
-
-    return (
-        <div>
-            <p className='message'></p>
-            <p id='nameTag'></p>
-        </div>
-    );
+    const message = props.message;
+    console.log(message);
+    if (message.ownedByCurrentUser){
+        return (
+            <div id='myMessage'>
+                <p>{message.body}</p>
+                <p>{message.userName}</p>
+            </div>
+        );
+    }else{
+        return (
+            <div id='notMyMessage'>
+                <p>{message.body}</p>
+                <p>{message.userName}</p>
+            </div>
+        );
+    }
 }
 
 export default Room
