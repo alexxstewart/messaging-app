@@ -24,14 +24,17 @@ function Room() {
 
     const handleMessageChange = (event) => {
         setText(event.target.value);
-        console.log('----------------------------');
     }
 
     return (
         <div className='messaging-div'>
             <div id='message-display-area'>
                 {messages.map((message) => {
-                    return <p key={message.messageID} className='message'>{message.body}</p>
+                    if (message.ownedByCurrentUser){
+                        return <p key={message.messageID} className='message'>{message.body}</p>
+                    }else{
+                        return <p key={message.messageID} className='message' style={{backgroundColor: 'red'}}>{message.body}</p>
+                    }
                 })}
             </div>
             <textarea value={text} id="text-input-area" onChange={handleMessageChange} onKeyDown={checkEnterKeySubmit} placeholder='Enter Message Here...'/>
