@@ -17,7 +17,7 @@ function Room() {
     const checkEnterKeySubmit = (event) => {
         if (event.which === 13){
             // enter key was pressed
-            sendMessage(text)
+            sendMessage(text, uuidv4())
             setText('')
         }
     }
