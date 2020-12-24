@@ -1,15 +1,16 @@
 import React from 'react';
 import chat from "./chat";
 import "./room.css";
+import { v4 as uuidv4 } from 'uuid';
 
 function Room() {
-
     const roomId = '123';
     const [text, setText] = React.useState('');
     const { messages, sendMessage } = chat(roomId);
 
     const sendMessageHandler = () => {
-        sendMessage(text);
+        // generate a random id for the text message and send the message
+        sendMessage(text, uuidv4());
         setText('')
     }
 
@@ -30,7 +31,7 @@ function Room() {
         <div className='messaging-div'>
             <div id='message-display-area'>
                 {messages.map((message) => {
-                    return <p className='message'>{message.body}</p>
+                    return <p key={message.messageID} className='message'>{message.body}</p>
                 })}
             </div>
             <textarea value={text} id="text-input-area" onChange={handleMessageChange} onKeyDown={checkEnterKeySubmit} placeholder='Enter Message Here...'/>
